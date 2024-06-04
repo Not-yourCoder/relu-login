@@ -1,8 +1,4 @@
-import React from 'react'
-
-type Props = {}
-
-const Footer = (props: Props) => {
+const Footer = () => {
     return (
         <div>
             <div className='flex justify-between text-[rgba(255,255,255,0.8)]'>
