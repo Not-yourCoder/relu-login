@@ -14,6 +14,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <div>404 Not found</div>,
     children: [
       {
         path: "/login",
@@ -32,6 +33,6 @@ const router = createBrowserRouter([
 ])
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    l<RouterProvider router={router} />
+    <RouterProvider router={router} />
   </React.StrictMode>,
 )
