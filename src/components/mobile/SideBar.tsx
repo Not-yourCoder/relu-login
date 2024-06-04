@@ -2,7 +2,7 @@ import { header } from '../../constants/header'
 import { IoIosClose } from "react-icons/io";
 
 
-const SideBar = ({ open, setOpenNav }: { open: boolean, setOpenNav: any }) => {
+const SideBar = ({ open, setOpenNav }: { open: boolean, setOpenNav: (isOpen: boolean) => void }) => {
     return (
         <div className={`fixed border-l-2 top-0 right-0 h-full w-72 bg-[#121418] z-50 transition-transform duration-300 transform ${open ? 'translate-x-0' : 'translate-x-full'} ease-in-out`}>
             <div className='p-4'>
