@@ -7,6 +7,8 @@ import toast from 'react-hot-toast';
 import GoogleSignin from '../../components/GoogleSignin';
 import Heading from '../../components/Heading';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { useState } from 'react';
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 
 interface SignupFormValues {
@@ -15,7 +17,8 @@ interface SignupFormValues {
     confirm_password: string;
 }
 export const SignupForm = () => {
-
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
     const navigate = useNavigate();
     const submit = async (values: { email: string, password: string }, { setSubmitting }: FormikHelpers<SignupFormValues>) => {
         try {
@@ -53,6 +56,10 @@ export const SignupForm = () => {
                             .email('Invalid email address')
                             .required('Email is Required'),
                         password: Yup.string()
+                            .matches(
+                                /^(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+                                'Password must contain at least one symbol, one number, one uppercase letter, and one lowercase letter'
+                            )
                             .required('Password is Required'),
                         confirm_password: Yup.string()
                             .required('Confirm Password is Required')
@@ -67,7 +74,7 @@ export const SignupForm = () => {
                                 name="email"
                                 type="email"
                                 placeholder="Email"
-                                className="w-full p-4 bg-[#222222] rounded text-white font-extralight text-xl"
+                                className="w-full p-4 bg-[#222222] rounded text-white font-extralight text-xl focus:outline-none focus:ring-0"
 
                             />
                             <div className='text-red-700'>
@@ -76,24 +83,32 @@ export const SignupForm = () => {
                         </div>
 
                         <div>
-                            <Field
-                                name="password"
-                                type="password"
-                                placeholder="Password"
-                                className="w-full p-4 bg-[#222222] rounded text-white font-extralight text-xl"
-                            />
+                            <div className='flex items-center bg-[#222222] rounded'>
+                                <Field
+                                    name="password"
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder="Password"
+                                    className="w-full p-4 bg-[#222222] rounded text-white font-extralight text-xl focus:outline-none focus:ring-0"
+                                />
+                                {showPassword ? <FaEye className='text-white mx-4 text-xl' onClick={() => setShowPassword(!showPassword)} /> : <FaEyeSlash className='text-white mx-4 text-xl' onClick={() => setShowPassword(!showPassword)} />}
+
+                            </div>
                             <div className='text-red-700'>
                                 <ErrorMessage name="password" />
                             </div>
                         </div>
 
                         <div>
-                            <Field
-                                name="confirm_password"
-                                type="password"
-                                placeholder="Confirm Password"
-                                className="w-full p-4 bg-[#222222] rounded text-white font-extralight text-xl"
-                            />
+                            <div className='flex items-center bg-[#222222] rounded'>
+                                <Field
+                                    name="confirm_password"
+                                    type={showConfirmPassword ? "text" : "password"}
+                                    placeholder="Password"
+                                    className="w-full p-4 bg-[#222222] rounded text-white font-extralight text-xl focus:outline-none focus:ring-0"
+                                />
+                                {showConfirmPassword ? <FaEye className='text-white mx-4 text-xl' onClick={() => setShowConfirmPassword(!showConfirmPassword)} /> : <FaEyeSlash className='text-white mx-4 text-xl' onClick={() => setShowConfirmPassword(!showConfirmPassword)} />}
+
+                            </div>
                             <div className='text-red-700'>
                                 <ErrorMessage name="confirm_password" />
                             </div>

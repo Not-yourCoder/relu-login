@@ -7,6 +7,8 @@ import GoogleSignin from '../../components/GoogleSignin';
 import Heading from '../../components/Heading';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase';
+import { useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 
 
 interface SignupFormValues {
@@ -15,6 +17,7 @@ interface SignupFormValues {
     confirm_password: string;
 }
 export const LoginForm = () => {
+    const [showPassword, setShowpassword] = useState<boolean>(false)
     const navigate = useNavigate();
     const handleSubmit = async (values: SignupFormValues, { setSubmitting }: FormikHelpers<SignupFormValues>) => {
         try {
@@ -61,7 +64,7 @@ export const LoginForm = () => {
                                 name="email"
                                 type="email"
                                 placeholder="Email"
-                                className="w-full p-4 bg-[#222222] rounded text-white font-extralight text-xl"
+                                className="w-full p-4 bg-[#222222] rounded text-white font-extralight text-xl focus:outline-none focus:ring-0"
                             />
                             <div className='text-red-700'>
                                 <ErrorMessage name="email" />
@@ -69,12 +72,16 @@ export const LoginForm = () => {
                         </div>
 
                         <div>
-                            <Field
-                                name="password"
-                                type="password"
-                                placeholder="Password"
-                                className="w-full p-4 bg-[#222222] rounded text-white font-extralight text-xl"
-                            />
+                            <div className='flex items-center bg-[#222222] rounded'>
+                                <Field
+                                    name="password"
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder="Password"
+                                    className="w-full p-4 bg-[#222222] rounded text-white font-extralight text-xl focus:outline-none focus:ring-0"
+                                />
+                                {showPassword ? <FaEye className='text-white mx-4 text-xl' onClick={() => setShowpassword(!showPassword)} /> : <FaEyeSlash className='text-white mx-4 text-xl' onClick={() => setShowpassword(!showPassword)} />}
+
+                            </div>
                             <div className='text-red-700'>
                                 <ErrorMessage name="password" />
                             </div>
